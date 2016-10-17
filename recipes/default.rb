@@ -3,6 +3,8 @@
 # Recipe:: default
 #
 # Copyright (c) 2016 John Kerry, All Rights Reserved.
+include_recipe 'chef_handler::default'
+
 handler_path = node['chef_handler']['handler_path']
 
 cookbook_file "#{handler_path}/simple_slack_handler.rb" do
@@ -12,7 +14,7 @@ cookbook_file "#{handler_path}/simple_slack_handler.rb" do
 end.run_action(:create)
 
 chef_handler 'Chef::Handler::SimpleSlackHandler' do
-  source "#{node['chef_handler']['handler_path']}/simple_slack_handler.rb"
+  source "#{handler_path}/simple_slack_handler.rb"
   arguments [
     node['handler']['slack']
   ]
