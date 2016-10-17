@@ -13,11 +13,26 @@ cookbook_file "#{handler_path}/simple_slack_handler.rb" do
   action :nothing
 end.run_action(:create)
 
-chef_handler 'Chef::Handler::SimpleSlackHandler' do
-  source "#{handler_path}/simple_slack_handler.rb"
-  arguments [
-    node['handler']['slack']
-  ]
-  supports start: false, report: false, exception: true
-  action :nothing
-end.run_action(:enable)
+# register the new handler. This is done at runtime to avoid an unnecessary
+# converge count so this remains idempotent. This can be removed when the
+# chef_handler resource is idempotent
+require "#{handler_path}/simple_slack_handler.rb"
+
+# pull in the utility functions from the cheh handler cookbook
+Chef::Recipe.send(:include, ::ChefHandler::Helpers)
+# pull in the utility functions from this cookbook
+Chef::Recipe.send(:include, ::SimpleSlackHandler::Helpers)
+# unregister the handler aggressively in case it's loaded
+class_name = 'Chef::Handler::SimpleSlackHandler'
+unregister_handler(:exception, class_name)
+_, klass = get_class(class_name)
+handler = klass.send(
+  :new,
+  *collect_args(
+    [
+      node['handler']['slack']
+    ]
+  )
+)
+# register the module for exceptions
+register_handler(:exception, handler)
