@@ -9,14 +9,13 @@ verifier:
   name: inspec
 
 platforms:
-  - name: ubuntu-16.04
-  - name: centos-7.2
+  - name: ubuntu64
+    driver_config:
+      box: ubuntu/trusty64
+      gui: true
 
 suites:
   - name: default
     run_list:
-      - recipe[ncr_slack_handler::default]
-    verifier:
-      inspec_tests:
-        - test/recipes
+      - recipe[simple_slack_handler::default]
     attributes:

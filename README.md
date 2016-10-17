@@ -1,4 +1,4 @@
-# ncr_slack_handler
+# simple_slack_handler
 
 TODO: Enter the cookbook description here.
 
