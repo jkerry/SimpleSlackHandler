@@ -32,7 +32,7 @@ Usage
 1. configure the following attributes
   ```
   # required attributes
-  
+
   default['handler']['slack']['channel'] = '#channel'
 
   default['handler']['slack']['token'] = 'SLACK_API_KEY'
@@ -44,4 +44,4 @@ Usage
   default['handler']['slack']['icon_emoji'] = ':rotating_light:'
 
   ```
-2. add the default recipe to your runlist
+2. add the default recipe to the start of your runlist
