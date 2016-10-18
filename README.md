@@ -3,7 +3,7 @@ Simple Slack Handler Cookbook
 ================
 
 A handler to report run failures to slack with minimal gem dependencies
-
+![Alt text](/screencap.jpg?raw=true "A Slack Alert")
 Platforms
 ---------
 Any platform should be fine since the recipe is nearly pure ruby but these are
