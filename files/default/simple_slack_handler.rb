@@ -63,7 +63,7 @@ class Chef
 
       def build_attachments_json
         attachment[:pretext] =
-          "Chef node: #{node.name} ( fqdn:#{node.fqdn} )"\
+          "Chef node: #{node.name} ( fqdn:#{node['fqdn']} )"\
           ' has failed to converge!'
         attachment[:fallback] = exception.to_s
         attachment[:fields] = generate_exception_field
